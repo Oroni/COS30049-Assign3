@@ -24,10 +24,10 @@ app.add_middleware(
 
 # Load the prediction models
 try:
-    with open(r'C:\Users\ASUS\OneDrive\Semester 3\Innovation Project\Assign 3\venv\random_forest_delays.pkl', 'rb') as file:
+    with open(r'C:\Users\ASUS\OneDrive\Semester 3\Innovation Project\Assign 3\venv\Weights\random_forest_delays.pkl', 'rb') as file:
         delay_model = pickle.load(file)
 
-    with open(r'C:\Users\ASUS\OneDrive\Semester 3\Innovation Project\Assign 3\venv\random_forest_fares.pkl', 'rb') as file:
+    with open(r'C:\Users\ASUS\OneDrive\Semester 3\Innovation Project\Assign 3\venv\Weights\random_forest_fares.pkl', 'rb') as file:
         fare_model = pickle.load(file)
 
     logging.info("Models loaded successfully.")
