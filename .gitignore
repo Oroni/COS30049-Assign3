@@ -1,0 +1,30 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+__pycache__/
+Include/
+Lib/
+Lib/site-packages
+Lib/*
+Scripts/
+
+# dependencies
+FrontEnd/predictionapp/node_modules
+FrontEnd/predictionapp/.pnp
+.pnp.js
+
+# testing
+FrontEnd/predictionapp/coverage
+
+# production
+FrontEnd/predictionapp/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
