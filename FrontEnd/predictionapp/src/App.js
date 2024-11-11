@@ -9,9 +9,11 @@ import Delay from './components/FlightsDelayPage';
 import Fare from './components/FlightsFarePage';
 import DelayPredictionPage from './components/DelayPredictionPage';
 import FarePredictionPage from './components/FarePredictionPage';
+import About from './components/About';
+import Contact from './components/Contact';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);  // Declare state
+  const [isAuthenticated, setIsAuthenticated] = useState(true);  // Declare state
 
   return (
     <Router>
@@ -29,6 +31,9 @@ function App() {
             element={isAuthenticated ? <Fare /> : <Navigate to="/register" />} 
           />
           
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+
           <Route path="/delay-prediction" element={<DelayPredictionPage />} />
           <Route path="/fare-prediction" element={<FarePredictionPage />} />
           <Route path="/register" element={<Register />} />

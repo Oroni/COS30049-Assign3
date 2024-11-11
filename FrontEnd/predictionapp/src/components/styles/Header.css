@@ -1,0 +1,68 @@
+/* src/components/Header.css */
+
+/* Basic reset for the body and ul */
+body, ul {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Styling for the header */
+  header {
+    background-color: #9468b1; /* Dark blue-gray background */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  }
+  
+  /* Center navigation and style it */
+  nav {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Remove bullets and apply horizontal layout */
+  ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+  }
+  
+  /* Style for navigation links */
+  li {
+    position: relative;
+  }
+  
+  li a {
+    color: #ecf0f1; /* Light text color */
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  li a:hover {
+    color: #1abc9c; /* Change color on hover */
+  }
+  
+  /* Underline animation on hover */
+  li a::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #1abc9c; /* Matches hover color */
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: right;
+  }
+  
+  li a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  

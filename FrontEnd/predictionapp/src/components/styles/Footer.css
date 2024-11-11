@@ -1,0 +1,25 @@
+/* src/components/Footer.css */
+
+/* Basic styling for the footer */
+footer {
+    background-color: #9468b1; /* Dark blue-gray background */
+    padding: 20px 0;
+    text-align: center;
+    color: #ecf0f1; /* Light text color */
+    font-size: 16px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); /* Subtle top shadow */
+  }
+  
+  /* Style for footer text */
+  footer p {
+    margin: 0;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Add a subtle glow effect to the text */
+  footer p:hover {
+    color: #1abc9c; /* Slightly different hover color */
+    transition: color 0.3s ease;
+  }
+  

@@ -7,6 +7,8 @@ Lib/site-packages
 Lib/*
 Scripts/
 Weights/
+node_modules
+share/
 
 # dependencies
 FrontEnd/predictionapp/node_modules

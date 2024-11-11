@@ -1,0 +1,100 @@
+/* FlightsFarePage.css */
+
+/* General styling for the form container */
+form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling the form elements */
+select, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+}
+
+/* Focus effect on select inputs */
+select:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Focus effect on button */
+button:focus {
+    outline: none;
+}
+
+/* Styling the submit button */
+button {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Hover effect on the button */
+button:hover {
+    background-color: #45a049;
+}
+
+/* Error message styling */
+p {
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Style for select dropdowns to make them more interactive */
+select {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+select option {
+    background-color: #fff;
+}
+
+/* Style for the labels and positioning */
+select, button {
+    display: block;
+    width: 100%;
+}
+
+/* Responsive design to handle smaller screens */
+@media (max-width: 600px) {
+    form {
+        width: 90%;
+    }
+
+    select, button {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+/* Add a smooth hover effect on options */
+select option:hover {
+    background-color: #f0f0f0;
+}
+
+/* Custom border color for select dropdown */
+select:focus {
+    border-color: #4CAF50;
+}
+
+/* Add spacing between the form fields */
+select, button {
+    margin-bottom: 15px;
+}

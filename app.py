@@ -10,6 +10,7 @@ from Civil_Aviation import Civil_Aviation
 import numpy as np
 import logging
 from fastapi.middleware.cors import CORSMiddleware
+#import plotly.graph_objects as go
 
 app = FastAPI()
 
@@ -24,10 +25,10 @@ app.add_middleware(
 
 # Load the prediction models
 try:
-    with open(r'C:\Users\ASUS\OneDrive\Semester 3\Innovation Project\Assign 3\venv\Weights\random_forest_delays.pkl', 'rb') as file:
+    with open(r'Weights\random_forest_delays.pkl', 'rb') as file:
         delay_model = pickle.load(file)
 
-    with open(r'C:\Users\ASUS\OneDrive\Semester 3\Innovation Project\Assign 3\venv\Weights\random_forest_fares.pkl', 'rb') as file:
+    with open(r'Weights\random_forest_fares.pkl', 'rb') as file:
         fare_model = pickle.load(file)
 
     logging.info("Models loaded successfully.")
@@ -42,7 +43,9 @@ def index():
 
 
 # Load flight features
-flight_features = pd.read_csv(r"C:\Users\ASUS\OneDrive\Semester 3\Innovation Project\Assign_02\flights_data.csv")
+if not os.path.exists("flights_data.csv"):
+    raise FileNotFoundError("Flight data file not found.")
+flight_features = pd.read_csv(r"flights_data.csv")
 min_fare = flight_features['Average_Fare'].min()
 max_fare = flight_features['Average_Fare'].max()
 
@@ -57,6 +60,9 @@ async def predict_fare(data: Civil_Aviation):
             (flight_features["Month"] == data.month) &
             (flight_features["Year"] == data.year)
         ]
+
+        print("DATA:")
+        print(data)
 
         if filtered_data.empty:
             raise HTTPException(status_code=404, detail="No data found for given input.")
@@ -74,11 +80,34 @@ async def predict_fare(data: Civil_Aviation):
         fare_prediction = fare_model.predict(prediction_input)[0]
         actual_fare = (fare_prediction * (max_fare - min_fare)) + min_fare
 
+
+        # # Create an interactive Plotly chart for fare prediction
+        # fig = go.Figure()
+
+        # # You can modify this chart based on the predicted fare values
+        # fig.add_trace(go.Bar(
+        #     x=[data.month],  # For example, plotting fares by month
+        #     y=[actual_fare],
+        #     name="Fare Prediction"
+        # ))
+
+        # # Customize the layout
+        # fig.update_layout(
+        #     title="Predicted Fare Over Time",
+        #     xaxis_title="month",
+        #     yaxis_title="Predicted Fare",
+        #     template="plotly_dark"
+        # )
+
+        # # Return the chart as a JSON response for frontend rendering
+        # chart_json = fig.to_json()
+
         return {
             "departing_port": data.departing_port,
             "arriving_port": data.arriving_port,
             "airline": data.airline,
             "predicted_fare": actual_fare,
+            #"chart": chart_json  # Add chart as part of response
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -94,6 +123,9 @@ async def predict_delay(data: Civil_Aviation):
             (flight_features["Month"] == data.month) &
             (flight_features["Year"] == data.year)
         ]
+
+        print("DATA:")
+        print(data)
 
         if filtered_data.empty:
             raise HTTPException(status_code=404, detail="No data found for given input.")
@@ -111,11 +143,32 @@ async def predict_delay(data: Civil_Aviation):
 
         #average_delay = (flight_features ["Departure_Delays_%"] + flight_features ["Arrival_Delays_%"]) * 0.5
         delay_percentage = delay_prediction * 100
+
+
+        # Create an interactive Plotly chart for delay prediction
+        # fig = go.Figure()
+
+        # fig.add_trace(go.Scatter(
+        #     x=list(range(1, 13)),  # For example, plotting delays across months
+        #     y=[delay_prediction] * 12,  # Placeholder for delay predictions
+        #     mode='lines+markers',
+        #     name="Delay Prediction"
+        # ))
+
+        # fig.update_layout(
+        #     title="Predicted Delay Across Months",
+        #     xaxis_title="month",
+        #     yaxis_title="Predicted Delay (%)",
+        #     template="plotly_dark"
+        # )
+
+        # chart_json = fig.to_json()
         
 
         return {
             "predicted_delay": delay_prediction,
-            "predicted_delay_percentage": delay_percentage
+            "predicted_delay_percentage": delay_percentage,
+            # "chart": chart_json
         }
     
     
@@ -135,24 +188,24 @@ async def predict_time(data: Civil_Aviation):
             delay_percentile_response = await predict_delay(data)
 
             predictions.append({
-                "Departing_Port": data.departing_port,
-                "Arriving_Port": data.arriving_port,
-                "Airline": data.airline,
-                "Year": data.year,
-                "Month": month,
+                "departing_port": data.departing_port,
+                "arriving_port": data.arriving_port,
+                "airline": data.airline,
+                "year": data.year,
+                "month": month,
                 "Predicted_Fare": fare_response['predicted_fare'],
                 "Predicted_Delay": delay_response['predicted_delay'],
                 "Predicted_delay_percentage": delay_percentile_response['predicted_delay_percentage']
             })
 
         df = pd.DataFrame(predictions)
-        csv_path = r"C:\Users\ASUS\OneDrive\Semester 3\Innovation Project\Assign 3\venv\predictions.csv"
+        csv_path = r"predictions.csv"
         
         if os.path.exists(csv_path):
             os.remove(csv_path)
         df.to_csv(csv_path, index=False)
 
-        return {"message": "Predictions saved to CSV successfully", "file_path": csv_path}
+        return {"message": "Predictions saved successfully, check: ", "file_path": csv_path}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -160,7 +213,7 @@ async def predict_time(data: Civil_Aviation):
 @app.get("/predict_time")
 async def get_predictions():
     try:
-        csv_path = r"C:\Users\ASUS\OneDrive\Semester 3\Innovation Project\Assign 3\venv\predictions.csv"
+        csv_path = r"predictions.csv"
 
         if not os.path.exists(csv_path):
             raise HTTPException(status_code=404, detail="Predictions CSV file not found.")

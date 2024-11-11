@@ -5,11 +5,11 @@ import numpy as np
 
 
 class Civil_Aviation(BaseModel):
-    departing_port: str
-    arriving_port: str
-    airline: str
-    month: int
-    year: int
+  departing_port: str
+  arriving_port: str
+  airline: str
+  month: int
+  year: int
 
 
 class Config:
