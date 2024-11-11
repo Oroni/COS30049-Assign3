@@ -50,28 +50,29 @@ min_fare = flight_features['Average_Fare'].min()
 max_fare = flight_features['Average_Fare'].max()
 
 @app.post("/predict_fare")
-async def predict_fare(data: Civil_Aviation):
+async def predict_fare(data: dict):
     try:
         # Filter the feature data based on user input
-        filtered_data = flight_features[
-            (flight_features["Departing_Port"] == data.departing_port) &
-            (flight_features["Arriving_Port"] == data.arriving_port) &
-            (flight_features["Airline"] == data.airline) &
-            (flight_features["Month"] == data.month) &
-            (flight_features["Year"] == data.year)
-        ]
+        # filtered_data = flight_features[
+        #     (flight_features["Departing_Port"] == data.departing_port) &
+        #     (flight_features["Arriving_Port"] == data.arriving_port) &
+        #     (flight_features["Airline"] == data.airline) &
+        #     (flight_features["Month"] == data.month) &
+        #     (flight_features["Year"] == data.year)
+        # ]
 
         print("DATA:")
         print(data)
 
-        if filtered_data.empty:
-            raise HTTPException(status_code=404, detail="No data found for given input.")
+        #if filtered_data.empty:
+        #    raise HTTPException(status_code=404, detail="No data found for given input.")
         
-        input_features = filtered_data.iloc[0].to_dict()
+        #input_features = filtered_data.iloc[0].to_dict()
+        input_features = data
 
         # One-hot encode ports and airlines
         for port in fare_model.feature_names_in_:
-            if port in [data.departing_port, data.arriving_port, data.airline]:
+            if port in [data['departing_port'], data['arriving_port'], data['airline']]:
                 input_features[port] = 1
             elif port not in input_features:
                 input_features[port] = 0
@@ -103,9 +104,9 @@ async def predict_fare(data: Civil_Aviation):
         # chart_json = fig.to_json()
 
         return {
-            "departing_port": data.departing_port,
-            "arriving_port": data.arriving_port,
-            "airline": data.airline,
+            "departing_port": data['departing_port'],
+            "arriving_port": data['arriving_port'],
+            "airline": data['airline'],
             "predicted_fare": actual_fare,
             #"chart": chart_json  # Add chart as part of response
         }
@@ -114,26 +115,28 @@ async def predict_fare(data: Civil_Aviation):
 
 
 @app.post("/predict_delay")
-async def predict_delay(data: Civil_Aviation):
+async def predict_delay(data: dict):
     try:
-        filtered_data = flight_features[
-            (flight_features["Departing_Port"] == data.departing_port) &
-            (flight_features["Arriving_Port"] == data.arriving_port) &
-            (flight_features["Airline"] == data.airline) &
-            (flight_features["Month"] == data.month) &
-            (flight_features["Year"] == data.year)
-        ]
+        # filtered_data = flight_features[
+        #     (flight_features["Departing_Port"] == data.departing_port) &
+        #     (flight_features["Arriving_Port"] == data.arriving_port) &
+        #     (flight_features["Airline"] == data.airline) &
+        #     (flight_features["Month"] == data.month) &
+        #     (flight_features["Year"] == data.year)
+        # ]
 
         print("DATA:")
         print(data)
 
-        if filtered_data.empty:
-            raise HTTPException(status_code=404, detail="No data found for given input.")
+        # if filtered_data.empty:
+        #     raise HTTPException(status_code=404, detail="No data found for given input.")
         
-        input_features = filtered_data.iloc[0].to_dict()
+        # input_features = filtered_data.iloc[0].to_dict()
+
+        input_features = data
 
         for feature in delay_model.feature_names_in_:
-            if feature in [data.departing_port, data.arriving_port, data.airline]:
+            if feature in [data['departing_port'], data['arriving_port'], data['airline']]:
                 input_features[feature] = 1
             elif feature not in input_features:
                 input_features[feature] = 0
@@ -177,21 +180,21 @@ async def predict_delay(data: Civil_Aviation):
 
 
 @app.post("/predict_time")
-async def predict_time(data: Civil_Aviation):
+async def predict_time(data: dict):
     try:
         predictions = []
 
         for month in range(1, 13):
-            data.month = month
+            data['month'] = month
             fare_response = await predict_fare(data)
             delay_response = await predict_delay(data)
             delay_percentile_response = await predict_delay(data)
 
             predictions.append({
-                "departing_port": data.departing_port,
-                "arriving_port": data.arriving_port,
-                "airline": data.airline,
-                "year": data.year,
+                "departing_port": data['departing_port'],
+                "arriving_port": data['arriving_port'],
+                "airline": data['airline'],
+                "year": data['year'],
                 "month": month,
                 "Predicted_Fare": fare_response['predicted_fare'],
                 "Predicted_Delay": delay_response['predicted_delay'],
