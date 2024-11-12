@@ -19,7 +19,7 @@ import FindAirline from './components/FindAirline.js';
 
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);  // Declare state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);  // Declare state
 
   return (
     <Router>

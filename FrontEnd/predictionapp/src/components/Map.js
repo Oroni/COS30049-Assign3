@@ -6,6 +6,27 @@ import L from 'leaflet';
 import { getDistance } from 'geolib';
 import { useLocation } from 'react-router-dom';
 
+import 'leaflet/dist/leaflet.css';
+
+
+import iconUrl from 'leaflet/dist/images/marker-icon.png';
+import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
+import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+    iconUrl,
+    iconRetinaUrl,
+    shadowUrl,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28],
+    shadowSize: [41, 41]
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
+
+
 
 const portCoordinates = {
   'Adelaide': [-34.9285, 138.6007],
@@ -91,7 +112,7 @@ function Map() {
     setCalculatedDistance(dist);
   }, [departing_port, arriving_port]);
 
-  if (!departingCoords || !arrivingCoords) return <p>Loading map...</p>;
+  if (!departingCoords || !arrivingCoords) return <p>You can also check out the map locations</p>;
 
   return (
     <div>

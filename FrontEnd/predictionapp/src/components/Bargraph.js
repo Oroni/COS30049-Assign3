@@ -25,7 +25,14 @@ const Bargraph = ({ chartData }) => {
                 scales: {
                     x: {
                         type: 'category', // Correct x-axis type for labels
-                    },
+                        ticks: {
+                          autoSkip: false, // Ensure all labels are displayed
+                          maxRotation: 45, // Adjust for long labels
+                          minRotation: 45,
+                        }
+
+                      },
+
                     y: {
                         type: 'linear', // Correct y-axis type for numerical data
                     }
