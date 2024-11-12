@@ -41,6 +41,7 @@ function App() {
             path="/find-airline" 
             element={isAuthenticated ? <FindAirline /> : <Navigate to="/register" />} 
           />
+          <Route path="/bargraph" element={<Bargraph/>} />
           
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
@@ -50,7 +51,6 @@ function App() {
         
 
           <Route path="/map" element={<Map />} />
-          <Route path="/bargraph" element={<Bargraph/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={
             <Login onLogin={() => setIsAuthenticated(true)} />

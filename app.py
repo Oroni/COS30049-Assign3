@@ -268,7 +268,8 @@ async def predict_airline(data: dict):
             "departing_port": data['departing_port'],
             "arriving_port": data['arriving_port'],
             "predicted_airline": lowest_fare_airline,
-            "predicted_fare": lowest_fare
+            "predicted_fare": lowest_fare,
+            "airline_fares" : airline_fares
         }
 
     except Exception as e:

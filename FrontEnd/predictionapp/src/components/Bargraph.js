@@ -1,84 +1,55 @@
-import { useState, useEffect } from "react";
-import { Bar } from "react-chartjs-2";
-import Papa from "papaparse";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarController,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import React, { useEffect, useRef } from 'react';
+import { Chart, BarController, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
+import FindAirline from './FindAirline';
 
-ChartJS.register(
-  Title,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  BarController
-);
+// Register components for Chart.js
+Chart.register(BarController, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
-const Bargraph = () => {
-  const [chartData, setChartData] = useState({
-    labels: [],
-    datasets: [
-      {
-        label: "Predictions",
-        backgroundColor: "rgba(75, 192, 192, 0.6)",
-        borderColor: "rgba(75, 192, 192, 1)",
-        borderWidth: 1,
-        data: [],
-      },
-    ],
-  });
+const Bargraph = ({ chartData }) => {
+    const chartRef = useRef(null);
 
-  useEffect(() => {
-    const csvPath = "C:/Users/ASUS/OneDrive/Semester 3/Innovation Project/Assign 3/venv/predictions.csv";
+    useEffect(() => {
+        const ctx = chartRef.current.getContext("2d");
 
-    Papa.parse(csvPath, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        const labels = [];
-        const data = [];
+        // Destroy previous chart instance if it exists
+        if (chartRef.current.chart) {
+            chartRef.current.chart.destroy();
+        }
 
-        // Extract `departing_port` and `arriving_port` as labels, and `Predicted_Fare` as data
-        results.data.forEach((row) => {
-          const label = `${row.departing_port} to ${row.arriving_port}`;
-          labels.push(label);
-          data.push(parseFloat(row.Predicted_Fare));
+        // Create a new chart instance
+        chartRef.current.chart = new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'category', // Correct x-axis type for labels
+                    },
+                    y: {
+                        type: 'linear', // Correct y-axis type for numerical data
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                    },
+                    tooltip: {
+                        enabled: true,
+                    }
+                }
+            }
         });
 
-        setChartData({
-          labels,
-          datasets: [
-            {
-              ...chartData.datasets[0],
-              data,
-            },
-          ],
-        });
-      },
-    });
-  }, []);
+        // Clean up chart instance on component unmount
+        return () => {
+            if (chartRef.current.chart) {
+                chartRef.current.chart.destroy();
+            }
+        };
+    }, [chartData]);
 
-  const options = {
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
-
-  return (
-    <div>
-      <Bar data={chartData} options={options} />
-    </div>
-  );
+    return <canvas ref={chartRef}></canvas>;
 };
 
 export default Bargraph;
