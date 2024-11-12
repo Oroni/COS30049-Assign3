@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Plot from 'react-plotly.js';
+import Map from './Map';
 
 const FarePredictionPage = () => {
     const location = useLocation();
@@ -36,6 +37,9 @@ const FarePredictionPage = () => {
                     <p><strong>Airline:</strong> {location.state.airline}</p>
                     <p><strong>Month:</strong> {new Date(0, location.state.month - 1).toLocaleString('en', { month: 'long' })}</p>
                     <p><strong>Year:</strong> {location.state.year}</p>
+
+                    <Map/>
+
                     <Plot data={[
                             {
                                 type: 'Bar',

@@ -3,6 +3,33 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Map from './Map';
 
+// List of ports with duplicates removed
+const portOptions = [
+    'Adelaide', 'Albury', 'Alice Springs', 'Armidale', 'Ayers Rock', 'Ballina',
+    'Brisbane', 'Broome', 'Bundaberg', 'Cairns', 'Canberra', 'Coffs Harbour',
+    'Darwin', 'Dubbo', 'Emerald', 'Geraldton', 'Gladstone', 'Gold Coast',
+    'Hamilton Island', 'Hobart', 'Kalgoorlie', 'Karratha', 'Launceston', 'Mackay',
+    'Melbourne', 'Mildura', 'Moranbah', 'Mount Isa', 'Newcastle', 'Newman',
+    'Perth', 'Port Hedland', 'Port Lincoln', 'Port Macquarie', 'Proserpine',
+    'Rockhampton', 'Sunshine Coast', 'Sydney', 'Tamworth', 'Townsville',
+    'Wagga Wagga'
+];
+
+// Updated list of airlines
+const airlineOptions = [
+    'Jetstar', 'Qantas', 'QantasLink', 'Regional Express', 'Skywest', 'Tigerair Australia',
+    'Virgin Australia', 'Virgin Australia - ATR/F100 Operations', 'Virgin Australia Regional Airlines'
+];
+
+// Month options for January to December
+const monthOptions = [
+    '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'
+];
+
+// Year options from 2010 to 2017
+const yearOptions = [
+    '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017'
+];
 
 function AirlineInfo({type}) {
     console.log(type);
@@ -19,33 +46,6 @@ function AirlineInfo({type}) {
     
     const navigate = useNavigate();
 
-    // List of ports with duplicates removed
-    const portOptions = [
-        'Adelaide', 'Albury', 'Alice Springs', 'Armidale', 'Ayers Rock', 'Ballina',
-        'Brisbane', 'Broome', 'Bundaberg', 'Cairns', 'Canberra', 'Coffs Harbour',
-        'Darwin', 'Dubbo', 'Emerald', 'Geraldton', 'Gladstone', 'Gold Coast',
-        'Hamilton Island', 'Hobart', 'Kalgoorlie', 'Karratha', 'Launceston', 'Mackay',
-        'Melbourne', 'Mildura', 'Moranbah', 'Mount Isa', 'Newcastle', 'Newman',
-        'Perth', 'Port Hedland', 'Port Lincoln', 'Port Macquarie', 'Proserpine',
-        'Rockhampton', 'Sunshine Coast', 'Sydney', 'Tamworth', 'Townsville',
-        'Wagga Wagga'
-    ];
-
-    // Updated list of airlines
-    const airlineOptions = [
-        'Jetstar', 'Qantas', 'QantasLink', 'Regional Express', 'Skywest', 'Tigerair Australia',
-        'Virgin Australia', 'Virgin Australia - ATR/F100 Operations', 'Virgin Australia Regional Airlines'
-    ];
-
-    // Month options for January to December
-    const monthOptions = [
-        '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'
-    ];
-
-    // Year options from 2010 to 2017
-    const yearOptions = [
-        '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017'
-    ];
 
     function AirlineSelector({type}){
         console.log("test");

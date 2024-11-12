@@ -45,11 +45,15 @@ p {
 }
 
 .fare-button {
-  background-color: #4CAF50;
+  background-color: #2d8730;
 }
 
 .delay-button {
-  background-color: #2196F3;
+  background-color: #f33a21;
+}
+
+.airline-button {
+  background-color: #4253bf;
 }
 
 /* Hover effect */
