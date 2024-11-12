@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Map from './Map';
+
 
 function AirlineInfo({type}) {
     console.log(type);
-    if (type != "fare" && type != "delay"){
-        throw Error("Type must be fare or delay");
+    if (type != "fare" && type != "delay" && type != "airline"){
+        throw Error("Type must be fare or delay or airline");
     }
 
     const [departing_port, setDepartingPort] = useState('');
@@ -45,6 +47,20 @@ function AirlineInfo({type}) {
         '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017'
     ];
 
+    function AirlineSelector({type}){
+        console.log("test");
+        if (type == 'airline'){
+            return null;
+        } else {
+            return <select value={airline} onChange={(e) => setAirline(e.target.value)} required>
+                <option value="">Select Airline</option>
+                {airlineOptions.map((airlineOption) => (
+                    <option key={airlineOption} value={airlineOption}>{airlineOption}</option>
+                ))}
+            </select>;
+        }
+    }
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
@@ -52,10 +68,11 @@ function AirlineInfo({type}) {
         const requestData = {
             departing_port: departing_port,
             arriving_port: arriving_port,
-            airline: airline,
+            airline: (type != 'airline') ? airline : null, // Set airline to null if type == 'airline'
             month: parseInt(month),
             year: parseInt(year),
         };
+
 
         console.log("Sending data to backend:", requestData);
 
@@ -73,7 +90,8 @@ function AirlineInfo({type}) {
                             arriving_port,
                             airline,
                             month,
-                            year
+                            year,
+                            chart : response.data.chart
                         }
                     });
                 } else {
@@ -89,13 +107,33 @@ function AirlineInfo({type}) {
                             arriving_port,
                             airline,
                             month,
-                            year
+                            year,
+                            chart : response.data.chart
+                        }
+                    });
+                } else {
+                    setError('Prediction data is missing');
+                }
+             
+            }
+            else if (type === 'airline') { 
+                if (response.data.predicted_airline !== undefined) {
+                    navigate('/map', {
+                        state: {
+                            predicted_airline: response.data.predicted_airline,
+                            predicted_fare: response.data.predicted_fare,
+                            departing_port,
+                            arriving_port,
+                            month,
+                            year,
+                            chart: response.data.chart
                         }
                     });
                 } else {
                     setError('Prediction data is missing');
                 }
             }
+            
             
         } catch (error) {
             console.error('Error fetching fare prediction:', error);
@@ -104,51 +142,51 @@ function AirlineInfo({type}) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            {/* Departing Port Dropdown */}
-            <select value={departing_port} onChange={(e) => setDepartingPort(e.target.value)} required>
-                <option value="">Select Departing Port</option>
-                {portOptions.map((port) => (
-                    <option key={port} value={port}>{port}</option>
-                ))}
-            </select>
+        <div>
+            <form onSubmit={handleSubmit}>
+                {/* Departing Port Dropdown */}
+                <select value={departing_port} onChange={(e) => setDepartingPort(e.target.value)} required>
+                    <option value="">Select Departing Port</option>
+                    {portOptions.map((port) => (
+                        <option key={port} value={port}>{port}</option>
+                    ))}
+                </select>
 
-            {/* Arriving Port Dropdown */}
-            <select value={arriving_port} onChange={(e) => setArrivingPort(e.target.value)} required>
-                <option value="">Select Arriving Port</option>
-                {portOptions.map((port) => (
-                    <option key={port} value={port}>{port}</option>
-                ))}
-            </select>
+                {/* Arriving Port Dropdown */}
+                <select value={arriving_port} onChange={(e) => setArrivingPort(e.target.value)} required>
+                    <option value="">Select Arriving Port</option>
+                    {portOptions.map((port) => (
+                        <option key={port} value={port}>{port}</option>
+                    ))}
+                </select>
+                
+                {/* Airline Dropdown */}
+                <AirlineSelector type={type}/>
 
-            {/* Airline Dropdown */}
-            <select value={airline} onChange={(e) => setAirline(e.target.value)} required>
-                <option value="">Select Airline</option>
-                {airlineOptions.map((airlineOption) => (
-                    <option key={airlineOption} value={airlineOption}>{airlineOption}</option>
-                ))}
-            </select>
+                { /* Month Dropdown */}
+                <select value={month} onChange={(e) => setMonth(e.target.value)} required>
+                    <option value="">Select Month</option>
+                    {monthOptions.map((monthOption) => (
+                        <option key={monthOption} value={monthOption}>{monthOption}</option>
+                    ))}
+                </select>
 
-            {/* Month Dropdown */}
-            <select value={month} onChange={(e) => setMonth(e.target.value)} required>
-                <option value="">Select Month</option>
-                {monthOptions.map((monthOption) => (
-                    <option key={monthOption} value={monthOption}>{monthOption}</option>
-                ))}
-            </select>
+                {/* Year Dropdown */}
+                <select value={year} onChange={(e) => setYear(e.target.value)} required>
+                    <option value="">Select Year</option>
+                    {yearOptions.map((yearOption) => (
+                        <option key={yearOption} value={yearOption}>{yearOption}</option>
+                    ))}
+                </select>
 
-            {/* Year Dropdown */}
-            <select value={year} onChange={(e) => setYear(e.target.value)} required>
-                <option value="">Select Year</option>
-                {yearOptions.map((yearOption) => (
-                    <option key={yearOption} value={yearOption}>{yearOption}</option>
-                ))}
-            </select>
+                <button type="submit">Submit</button>
 
-            <button type="submit">Submit</button>
+                {error && <p>{error}</p>}
+            </form>
 
-            {error && <p>{error}</p>}
-        </form>
+            {/* Map displaying route between selected ports */}
+            <Map departing_port={departing_port} arriving_port={arriving_port} />
+        </div>
     );
 }
 

@@ -11,6 +11,12 @@ import DelayPredictionPage from './components/DelayPredictionPage';
 import FarePredictionPage from './components/FarePredictionPage';
 import About from './components/About';
 import Contact from './components/Contact';
+import Bargraph from './components/Bargraph';
+import AirlineInfo from './components/AirlineInfo';
+import Map from './components/Map';
+import FindAirline from './components/FindAirline.js';
+
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);  // Declare state
@@ -30,17 +36,25 @@ function App() {
             path="/flights-fare" 
             element={isAuthenticated ? <Fare /> : <Navigate to="/register" />} 
           />
+
+          <Route 
+            path="/find-airline" 
+            element={isAuthenticated ? <FindAirline /> : <Navigate to="/register" />} 
+          />
           
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
 
           <Route path="/delay-prediction" element={<DelayPredictionPage />} />
           <Route path="/fare-prediction" element={<FarePredictionPage />} />
+        
+
+          <Route path="/map" element={<Map />} />
+          <Route path="/bargraph" element={<Bargraph/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={
             <Login onLogin={() => setIsAuthenticated(true)} />
           } />
-          
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Layout>

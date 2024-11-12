@@ -1,157 +1,65 @@
-/* Body background with gradient animation */
-body {
-    background: linear-gradient(135deg, #141e30, #243b55);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
-    color: #6481d8;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  }
-  
-  /* Parallax Background Effect */
-  .home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    text-align: center;
-    padding: 20px;
-    perspective: 1000px;
-  }
-  
-  /* Animated Gradient Background */
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  
-  /* Welcome Title with Fade-In and Glow Effect */
-  .welcome-title {
-    font-size: 3.5rem;
-    color: #18525d;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 0 8px rgba(0, 212, 255, 0.7), 0 0 15px rgba(0, 212, 255, 0.5);
-    animation: fadeInDown 1.2s ease-out;
-    transform: translateZ(30px);
-  }
-  
-  /* Subtitle with Soft Fade-In */
-  .subtitle {
-    font-size: 1.7rem;
-    color: #353358;
-    margin-bottom: 2rem;
-    text-shadow: 0 0 4px rgba(212, 212, 212, 0.5);
-    animation: fadeInUp 1.4s ease-out;
-  }
-  
-  /* Glassmorphism for Description */
-  .description {
-    background: rgba(29, 11, 83, 0.1);
-    border-radius: 15px;
-    padding: 20px;
-    max-width: 600px;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    color: #4d6a90;
-    animation: fadeInUp 1.6s ease-out;
-  }
-  
-  .description p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    margin: 0 auto;
-  }
-  
-  /* Navigation buttons with 3D Effect and Icon Animation */
-  .nav-buttons {
-    display: flex;
-    gap: 15px;
-    margin-top: 2rem;
-  }
-  
-  .nav-button {
-    padding: 15px 30px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-decoration: none;
-    color: #8a77e0;
-    border-radius: 50px;
-    background: linear-gradient(90deg, #00c6ff, #0072ff);
-    box-shadow: 0 6px 15px rgba(0, 114, 255, 0.4);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transform: translateZ(20px);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .nav-button i {
-    font-size: 1.3rem;
-    transition: transform 0.3s;
-  }
-  
-  .nav-button:hover {
-    transform: scale(1.05) translateZ(20px);
-    box-shadow: 0 6px 25px rgba(0, 114, 255, 0.6);
-  }
-  
-  .nav-button:hover i {
-    transform: rotate(10deg);
-  }
-  
-  .fare-button {
-    background: linear-gradient(90deg, #18525d, #9a1895);
-    box-shadow: 0 6px 15px rgba(65, 68, 113, 0.4);
-  }
-  
-  .delay-button {
-    background: linear-gradient(90deg, #9a1895, #18525d);
-    box-shadow: 0 6px 15px rgba(53, 65, 101, 0.4);
-  }
-  
-  /* Fade-in animations */
-  @keyframes fadeInDown {
-    0% { opacity: 0; transform: translateY(-30px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-  
-  @keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(30px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-  
-  /* Particle Animation */
-  @keyframes particles {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-200px); }
-  }
-  
-  .particle {
-    position: absolute;
-    top: 0;
-    width: 5px;
-    height: 5px;
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    animation: particles 5s linear infinite;
-    opacity: 0.7;
-  }
-  
-  /* Different particle sizes and speeds */
-  .particle:nth-child(1) {
-    left: 20%; width: 3px; height: 3px; animation-duration: 4s;
-  }
-  .particle:nth-child(2) {
-    left: 40%; width: 6px; height: 6px; animation-duration: 6s;
-  }
-  .particle:nth-child(3) {
-    left: 60%; width: 4px; height: 4px; animation-duration: 5s;
-  }
-  .particle:nth-child(4) {
-    left: 80%; width: 5px; height: 5px; animation-duration: 7s;
-  }
-  
+/* General styling */
+.home-container {
+  text-align: center;
+  padding: 20px;
+  background-color: #f4f4f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h2 {
+  font-size: 4rem;
+  margin-bottom: 30px;
+}
+
+h3 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+p {
+  font-size: 1rem;
+  margin-bottom: 30px;
+  color: #777;
+}
+
+/* Button container */
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Button styling */
+.nav-button {
+  padding: 12px 25px;
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.fare-button {
+  background-color: #4CAF50;
+}
+
+.delay-button {
+  background-color: #2196F3;
+}
+
+/* Hover effect */
+.nav-button:hover {
+  transform: scale(1.1); /* Button enlarges slightly on hover */
+  opacity: 0.9;
+}
+
+/* Focus state for accessibility */
+.nav-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.5); /* Focus indicator */
+}

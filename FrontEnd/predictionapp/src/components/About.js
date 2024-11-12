@@ -12,7 +12,7 @@ const About = () => {
         <div className="about-container">
             <h1>About Us</h1>
 
-            <section>
+            <section className={activeSection === 'welcome' ? 'active' : ''}>
                 <h2 onClick={() => toggleSection('welcome')}>Welcome to the X-Airlines Flight Delay & Fare Prediction System</h2>
                 {activeSection === 'welcome' && (
                     <p>
@@ -21,7 +21,7 @@ const About = () => {
                 )}
             </section>
 
-            <section>
+            <section className={activeSection === 'mission' ? 'active' : ''}>
                 <h2 onClick={() => toggleSection('mission')}>Our Mission</h2>
                 {activeSection === 'mission' && (
                     <p>
@@ -30,7 +30,7 @@ const About = () => {
                 )}
             </section>
 
-            <section>
+            <section className={activeSection === 'features' ? 'active' : ''}>
                 <h2 onClick={() => toggleSection('features')}>Key Features</h2>
                 {activeSection === 'features' && (
                     <ul>
@@ -42,7 +42,7 @@ const About = () => {
                 )}
             </section>
 
-            <section>
+            <section className={activeSection === 'howItWorks' ? 'active' : ''}>
                 <h2 onClick={() => toggleSection('howItWorks')}>How It Works</h2>
                 {activeSection === 'howItWorks' && (
                     <ol>
@@ -54,7 +54,7 @@ const About = () => {
                 )}
             </section>
 
-            <section>
+            <section className={activeSection === 'technology' ? 'active' : ''}>
                 <h2 onClick={() => toggleSection('technology')}>Technology Behind the System</h2>
                 {activeSection === 'technology' && (
                     <p>
@@ -63,7 +63,7 @@ const About = () => {
                 )}
             </section>
 
-            <section>
+            <section className={activeSection === 'whyUse' ? 'active' : ''}>
                 <h2 onClick={() => toggleSection('whyUse')}>Why Use This System?</h2>
                 {activeSection === 'whyUse' && (
                     <ul>
@@ -75,7 +75,7 @@ const About = () => {
                 )}
             </section>
 
-            <section>
+            <section className={activeSection === 'team' ? 'active' : ''}>
                 <h2 onClick={() => toggleSection('team')}>Our Team</h2>
                 {activeSection === 'team' && (
                     <p>
@@ -84,11 +84,11 @@ const About = () => {
                 )}
             </section>
 
-            <section>
+            <section className={activeSection === 'contact' ? 'active' : ''}>
                 <h2 onClick={() => toggleSection('contact')}>Contact Us</h2>
                 {activeSection === 'contact' && (
                     <p>
-                        For support or inquiries, please reach out to our team at <a href="mailto:support@x-airlines.com">support@x-airlines.com</a> or contact your internal IT support for assistance.
+                        For support or inquiries about the system, please reach out to us at <a href="mailto:support@xairlines.com">support@xairlines.com</a>.
                     </p>
                 )}
             </section>

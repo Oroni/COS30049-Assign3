@@ -1,18 +1,22 @@
 /* Layout.css */
 div {
-    /* Removed background image */
-    background-color: #f0f0f0; /* Optional: Add a fallback background color */
-    min-height: 100vh; /* Ensures the div covers the full height of the page */
+   
+    background-color: #f0f0f0; 
+    min-height: 100%; /* Ensures the div covers the full height of the page */
   }
   
   main {
-    padding: 20px; /* Optional: Add padding for the content */
+    padding: 30px; /* Optional: Add padding for the content */
   }
   
   header, footer {
-    background-color:#493a74;; /* Example background color for header/footer */
+    background-color:#271b48;; /* Example background color for header/footer */
     color: white;
-    padding: 10px;
+    padding: 20px;
     text-align: center;
   }
   
+  footer {
+    height: 100px;
+    margin-top: auto; /* This pushes the footer to the bottom */
+  }

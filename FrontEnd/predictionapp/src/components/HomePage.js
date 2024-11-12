@@ -1,40 +1,30 @@
-// HomePage.js
-//import React from 'react';
-//import { Link } from 'react-router-dom';
-//import './HomePage.css'
-
-//function HomePage() {
- // return (
-    //<div>
-     // <h2>Welcome to the X-Airlines</h2>
-      //<h3>Flight Predictor</h3>
-      //<nav>
-       // <Link to="/flights-fare">Flight Fare</Link>
-       // <br />
-      //  <Link to="/flights-delay">Flight Delay</Link>
-     // </nav>
-   // </div>
-  //);
-//}
-
-//export default HomePage;
-
-
 import React from 'react';
-import { Link } from 'react-router-dom';
-import './styles/HomePage.css';
+import { Link, useNavigate } from 'react-router-dom';
+import './styles/HomePage.css'; // Import the CSS file for styling
 
 function HomePage() {
+
+  const history = useNavigate();
+
+  const handleClick = () => {
+    history.push({
+      pathname: '/map',
+      state: {
+        departing_port: '',
+        arriving_port: '',
+        airline: '',
+        month: '',
+        year: '',
+      },
+    });
+  };
+
+
   return (
     <div className="home-container">
-      <h2 className="welcome-title">Welcome to X-Airlines</h2>
-      <h3 className="subtitle">Your Flight Predictor</h3>
-
-      <div className="description">
-        <p>
-          We make the travel experience smarter by predicting flight fares and delays. 
-        </p>
-      </div>
+      <h2>Welcome to X-Airlines</h2>
+      <h3>Your Flight Predictor</h3>
+      <p>We make the travel experience smarter by predicting flight fares and delays.</p>
 
       <div className="nav-buttons">
         <Link to="/flights-fare" className="nav-button fare-button">
@@ -43,10 +33,12 @@ function HomePage() {
         <Link to="/flights-delay" className="nav-button delay-button">
           Predict Flight Delay
         </Link>
+        <Link to="/find-airline" className="nav-button airline-button">
+          Predict Airline with Lowest Fare
+        </Link>
       </div>
     </div>
   );
 }
 
 export default HomePage;
-

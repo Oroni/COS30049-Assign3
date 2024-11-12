@@ -10,7 +10,7 @@ from Civil_Aviation import Civil_Aviation
 import numpy as np
 import logging
 from fastapi.middleware.cors import CORSMiddleware
-#import plotly.graph_objects as go
+import plotly.graph_objects as go
 
 app = FastAPI()
 
@@ -103,12 +103,17 @@ async def predict_fare(data: dict):
         # # Return the chart as a JSON response for frontend rendering
         # chart_json = fig.to_json()
 
+        chart_data = {
+            'x':[data['month']],  # For example, plotting fares by month
+            'y':[actual_fare]
+        }
+
         return {
             "departing_port": data['departing_port'],
             "arriving_port": data['arriving_port'],
             "airline": data['airline'],
             "predicted_fare": actual_fare,
-            #"chart": chart_json  # Add chart as part of response
+            "chart": chart_data  # Add chart as part of response
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -166,12 +171,17 @@ async def predict_delay(data: dict):
         # )
 
         # chart_json = fig.to_json()
+
+        chart_data = {
+            "x":list(range(1, 13)),  # For example, plotting delays across months
+            "y":[delay_prediction] * 12,  # Placeholder for delay predictions
+        }
         
 
         return {
             "predicted_delay": delay_prediction,
             "predicted_delay_percentage": delay_percentage,
-            # "chart": chart_json
+            "chart": chart_data
         }
     
     
@@ -225,6 +235,42 @@ async def get_predictions():
         predictions = df.to_dict(orient='records')
 
         return {"predictions": predictions}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+
+@app.post("/predict_airline")
+async def predict_airline(data: dict):
+    try:
+        print("DATA:")
+        print(data)
+
+        airlines = [
+        'Jetstar', 'Qantas', 'QantasLink', 'Regional Express', 'Skywest', 'Tigerair Australia',
+        'Virgin Australia', 'Virgin Australia - ATR/F100 Operations', 'Virgin Australia Regional Airlines' ];
+
+        # empty dictionary to store predicted fares for each airline
+        airline_fares = {}
+
+        for airline in airlines:
+            data['airline'] = airline
+            fare_response = await predict_fare(data)
+            predicted_fare = fare_response['predicted_fare']
+
+            # Store the predicted fare for this airline
+            airline_fares[airline] = predicted_fare
+
+        # Find the airline with the lowest predicted fare
+        lowest_fare_airline = min(airline_fares, key=airline_fares.get)
+        lowest_fare = airline_fares[lowest_fare_airline]
+
+        return {
+            "departing_port": data['departing_port'],
+            "arriving_port": data['arriving_port'],
+            "predicted_airline": lowest_fare_airline,
+            "predicted_fare": lowest_fare
+        }
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
