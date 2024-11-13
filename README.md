@@ -1,15 +1,15 @@
 #COS30049-Assign3
 How to run the system?
 
-pip install fastapi
-pip install uvicorn
-pip install pandas
-pip install pydantic
-pip install scikit-learn
-npm install axios
-npm install plotly.js
-npm install leaflet
-npm install chart.js
+pip install fastapi <br>
+pip install uvicorn <br>
+pip install pandas <br>
+pip install pydantic <br>
+pip install scikit-learn <br>
+npm install axios <br>
+npm install plotly.js <br>
+npm install leaflet <br>
+npm install chart.js <br>
 
 
 >> Download and Extract the Zip Folder
