@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';  // Use Navigate here
 
-import Layout from './components/Layout'; 
 import Register from './components/Register';
 import Login from './components/LoginPage';
 import HomePage from './components/HomePage';
@@ -15,6 +14,7 @@ import Bargraph from './components/Bargraph';
 import AirlineInfo from './components/AirlineInfo';
 import Map from './components/Map';
 import FindAirline from './components/FindAirline.js';
+import Layout from './components/Layout'; 
 
 
 

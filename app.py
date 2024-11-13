@@ -52,21 +52,10 @@ max_fare = flight_features['Average_Fare'].max()
 @app.post("/predict_fare")
 async def predict_fare(data: dict):
     try:
-        # Filter the feature data based on user input
-        # filtered_data = flight_features[
-        #     (flight_features["Departing_Port"] == data.departing_port) &
-        #     (flight_features["Arriving_Port"] == data.arriving_port) &
-        #     (flight_features["Airline"] == data.airline) &
-        #     (flight_features["Month"] == data.month) &
-        #     (flight_features["Year"] == data.year)
-        # ]
 
         print("DATA:")
         print(data)
 
-        #if filtered_data.empty:
-        #    raise HTTPException(status_code=404, detail="No data found for given input.")
-        
         #input_features = filtered_data.iloc[0].to_dict()
         input_features = data
 
@@ -81,27 +70,6 @@ async def predict_fare(data: dict):
         fare_prediction = fare_model.predict(prediction_input)[0]
         actual_fare = (fare_prediction * (max_fare - min_fare)) + min_fare
 
-
-        # # Create an interactive Plotly chart for fare prediction
-        # fig = go.Figure()
-
-        # # You can modify this chart based on the predicted fare values
-        # fig.add_trace(go.Bar(
-        #     x=[data.month],  # For example, plotting fares by month
-        #     y=[actual_fare],
-        #     name="Fare Prediction"
-        # ))
-
-        # # Customize the layout
-        # fig.update_layout(
-        #     title="Predicted Fare Over Time",
-        #     xaxis_title="month",
-        #     yaxis_title="Predicted Fare",
-        #     template="plotly_dark"
-        # )
-
-        # # Return the chart as a JSON response for frontend rendering
-        # chart_json = fig.to_json()
 
         chart_data = {
             'x':[data['month']],  # For example, plotting fares by month
@@ -122,21 +90,9 @@ async def predict_fare(data: dict):
 @app.post("/predict_delay")
 async def predict_delay(data: dict):
     try:
-        # filtered_data = flight_features[
-        #     (flight_features["Departing_Port"] == data.departing_port) &
-        #     (flight_features["Arriving_Port"] == data.arriving_port) &
-        #     (flight_features["Airline"] == data.airline) &
-        #     (flight_features["Month"] == data.month) &
-        #     (flight_features["Year"] == data.year)
-        # ]
 
         print("DATA:")
         print(data)
-
-        # if filtered_data.empty:
-        #     raise HTTPException(status_code=404, detail="No data found for given input.")
-        
-        # input_features = filtered_data.iloc[0].to_dict()
 
         input_features = data
 
@@ -152,25 +108,6 @@ async def predict_delay(data: dict):
         #average_delay = (flight_features ["Departure_Delays_%"] + flight_features ["Arrival_Delays_%"]) * 0.5
         delay_percentage = delay_prediction * 100
 
-
-        # Create an interactive Plotly chart for delay prediction
-        # fig = go.Figure()
-
-        # fig.add_trace(go.Scatter(
-        #     x=list(range(1, 13)),  # For example, plotting delays across months
-        #     y=[delay_prediction] * 12,  # Placeholder for delay predictions
-        #     mode='lines+markers',
-        #     name="Delay Prediction"
-        # ))
-
-        # fig.update_layout(
-        #     title="Predicted Delay Across Months",
-        #     xaxis_title="month",
-        #     yaxis_title="Predicted Delay (%)",
-        #     template="plotly_dark"
-        # )
-
-        # chart_json = fig.to_json()
 
         chart_data = {
             "x":list(range(1, 13)),  # For example, plotting delays across months
