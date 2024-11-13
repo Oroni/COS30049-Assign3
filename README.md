@@ -18,6 +18,8 @@ npm install chart.js <br>
 
 >> Download the zip file and extract it to your desired location.
 
+>> You will find everything inside the venv folder
+
 >> Navigate to the BackEnd folder inside the extracted directory.
 
 >> Open a terminal here and start the backend by running: python main.py
